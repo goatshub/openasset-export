@@ -36,4 +36,4 @@ const getOAProjectFilesToFolder = async (projectIdStart) => {
 /**
  * (Optional) Adding project id number as parameter as a starting point.
  */
-getOAProjectFilesToFolder(31);
+getOAProjectFilesToFolder();

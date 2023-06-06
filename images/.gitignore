@@ -1,0 +1,3 @@
+#For ignoring all downloaded folders within images folder and upload only empty folder.
+*
+!.gitignore

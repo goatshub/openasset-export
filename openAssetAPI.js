@@ -103,18 +103,19 @@ const getFile = async (
   await new Promise((resolve, reject) => {
     photoData.data.pipe(writer);
     photoData.data.on("end", () => {
-      resolve();
+      console.log(`Finished getting file ${filename}`);
     });
-    photoData.data.on("error", () => {
-      reject();
+    photoData.data.on("error", (err) => {
+      console.error("Error while streaming data: ", err.message);
+      reject(err);
     });
 
     writer.on("finish", () => {
-      console.log(`Finished getting file ${filename}`);
+      console.log(`Finished writing file ${filename}`);
       resolve();
     });
     writer.on("error", (err) => {
-      console.error(err);
+      console.error("Error while writing data: ", err.message);
       reject(err);
     });
 

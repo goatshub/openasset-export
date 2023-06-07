@@ -11,7 +11,7 @@ import { getAllProjects, getFilesByProject, getFile } from "./openAssetAPI.js";
 const getOAProjectFilesToFolder = async (projectIndexStart) => {
   let allProjects = await getAllProjects();
   let projects = projectIdStart
-    ? allProjects.splice(projectIdStart - 1, 1) // ? allProjects.splice(projectIdStart - 1, 10)
+    ? allProjects.splice(projectIndexStart) // ? allProjects.splice(projectIndexStart, 10)
     : allProjects;
 
   for (const project of projects) {

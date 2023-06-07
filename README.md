@@ -21,14 +21,14 @@ npm run start
 
 5. Done.
 
-It can take a long time so it's ok to cancel mid run by ctrl + c and be careful of the available space in your drive.
+It can take a long time so it's ok to cancel mid run by ctrl + c. Be careful of the available space in your drive and remove unfinshed downloaded file from the last run.
 
-You can start later by continuing at the latest project ID downloaded by editing parameter in function in index.js file.
+You can start later by continuing at the latest project index downloaded by editing parameter in function in index.js file.
 
 Example:
 
-1. Latest folder downloaded is "./images/31 - xxxxxx xxxx xxx" (project ID 31)
+1. Latest folder downloaded is "./images/31 - xxxxxx xxxx xxx" (project ID is 31 but the index is 30)
 
-2. Edit line 39 in index.js to getOAProjectFilesToFolder(**31**).
+2. Edit line 39 in index.js to getOAProjectFilesToFolder(**30**).
 
 3. Rerun the script again. The script will start getting data from project 31 onwards

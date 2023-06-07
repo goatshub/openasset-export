@@ -29,6 +29,6 @@ Example:
 
 1. Latest folder downloaded is "./images/31 - xxxxxx xxxx xxx" (project ID is 31 but the index is 30)
 
-2. Edit line 39 in index.js to getOAProjectFilesToFolder(**30**).
+2. Edit line 38 in index.js to getOAProjectFilesToFolder(**30**).
 
 3. Rerun the script again. The script will start getting data from project 31 onwards

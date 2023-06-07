@@ -31,4 +31,4 @@ Example:
 
 2. Edit line 38 in index.js to getOAProjectFilesToFolder(**30**).
 
-3. Rerun the script again. The script will start getting data from project 31 onwards
+3. Rerun the script again. The script will start getting data from project index 30 onwards

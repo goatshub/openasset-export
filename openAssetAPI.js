@@ -1,6 +1,7 @@
 import "dotenv/config";
 import fs from "fs";
 import { getAxios } from "./utils.js";
+import ProgressBar from "progress";
 
 const headerAuth = {
   headers: {
@@ -22,7 +23,7 @@ const getAllProjects = async () => {
     headerAuth
   );
   console.log("projects: ", projects);
-  return projects;
+  return projects.data;
 };
 
 /**
@@ -41,11 +42,11 @@ const getFilesByProject = async (project_id) => {
     headerAuth
   );
   console.log("Finish getting files by Project id: " + project_id);
-  return files;
+  return files.data;
 };
 
 /**
- * GET file from `{unc_root}{relative_path}` as base64 data and save the file to project folder.
+ * GET file from `{unc_root}{relative_path}` and download the file to project folder.
  * If file already exists, it will not not redownload.
  * @date 6/6/2023 - 1:29:38 PM
  *
@@ -61,42 +62,67 @@ const getFile = async (
   project_id = "",
   project_name = ""
 ) => {
-  //escape special character not allowed as folder name
-  let dir = `./images/${project_id} - ${project_name
+  //Escape special character not allowed as folder name
+  const dir = `./images/${project_id} - ${project_name
     .toString()
     .replace(/[\\\/\?\*\|\<\>\:]/g, " ")}`;
-  let relative_path_splitted = relative_path.split("/");
-  let filename = relative_path_splitted[relative_path_splitted.length - 1];
+  //Create file path
+  const relative_path_splitted = relative_path.split("/");
+  const filename = relative_path_splitted[relative_path_splitted.length - 1];
+  const filePath = `${dir}/${filename}`;
+  console.log("Starts getting file " + filePath);
 
-  console.log(
-    "Starts getting file " +
-      filename +
-      " of project " +
-      project_id +
-      " - " +
-      project_name
-  );
-
-  //Check existing file in directory, if already saved then skip.
-  if (fs.existsSync(`${dir}/${filename}`)) {
+  //Check existing file in directory, if already saved then end the function.
+  if (fs.existsSync(filePath)) {
     console.log("File already downloaded");
     return null;
   }
 
   let photoData = await getAxios(`${unc_root}${relative_path}`, {
-    responseType: "text",
-    responseEncoding: "base64",
+    responseType: "stream",
   });
   // console.log("photodata : ", photoData);
 
-  //write file to dir
+  // Total file size for progress bar
+  const totalLength = photoData.headers["content-length"];
+
+  // Create a progress bar with the total file size
+  const bar = new ProgressBar(":bar :percent", {
+    width: 20,
+    total: parseInt(totalLength),
+  });
+
+  // Create project folder if it doesn't exist.
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
-  fs.writeFileSync(`${dir}/${filename}`, photoData, {
-    encoding: "base64",
+  // Write the data to a local file
+  const writer = fs.createWriteStream(filePath);
+
+  // Promise-based file write
+  await new Promise((resolve, reject) => {
+    photoData.data.pipe(writer);
+    photoData.data.on("end", () => {
+      resolve();
+    });
+    photoData.data.on("error", () => {
+      reject();
+    });
+
+    writer.on("finish", () => {
+      console.log(`Finished getting file ${filename}`);
+      resolve();
+    });
+    writer.on("error", (err) => {
+      console.error(err);
+      reject(err);
+    });
+
+    photoData.data.on("data", (chunk) => {
+      // Update the progress bar with the size of the data chunk
+      bar.tick(chunk.length);
+    });
   });
-  console.log("Finish getting file");
 };
 
 export { getAllProjects, getFilesByProject, getFile };

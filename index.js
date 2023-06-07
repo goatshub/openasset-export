@@ -2,16 +2,16 @@ import { getAllProjects, getFilesByProject, getFile } from "./openAssetAPI.js";
 
 /**
  * Download all files in Open Asset sorted by projects to 'images' folder with folder name format '{project ID} - {project name}}'.
- * If projectIdStart is given, it will start from that ID. If not, it will start from project ID 1.
+ * If projectIndexStart is given, it will start from that index. If not, it will start from project index 0.
  * @date 6/6/2023 - 1:19:27 PM
  *
  * @async
- * @param {number} [projectIdStart] - Starting project ID.
+ * @param {number} [projectIndexStart] - Starting project index (of all projects array).
  */
-const getOAProjectFilesToFolder = async (projectIdStart) => {
+const getOAProjectFilesToFolder = async (projectIndexStart) => {
   let allProjects = await getAllProjects();
   let projects = projectIdStart
-    ? allProjects.splice(projectIdStart - 1)
+    ? allProjects.splice(projectIdStart - 1, 1) // ? allProjects.splice(projectIdStart - 1, 10)
     : allProjects;
 
   for (const project of projects) {
@@ -33,6 +33,7 @@ const getOAProjectFilesToFolder = async (projectIdStart) => {
 };
 
 /**
- * (Optional) Adding project id number as parameter as a starting point.
+ * (Optional) Adding project index number as parameter as a starting point.
  */
-getOAProjectFilesToFolder();
+// getOAProjectFilesToFolder(100);
+getOAProjectFilesToFolder(535);

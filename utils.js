@@ -24,7 +24,7 @@ axiosRetry(axios, {
 const getAxios = async (url, option = {}) => {
   try {
     const response = await axios.get(url, option);
-    return response.data;
+    return response;
   } catch (error) {
     console.log("error in getAxios function");
     console.log(error.toJSON());

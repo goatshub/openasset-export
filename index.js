@@ -35,4 +35,4 @@ const getOAProjectFilesToFolder = async (projectIndexStart) => {
 /**
  * (Optional) Adding project index number as parameter as a starting point.
  */
-getOAProjectFilesToFolder(300);
+getOAProjectFilesToFolder();

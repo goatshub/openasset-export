@@ -15,7 +15,9 @@ const getOAProjectFilesToFolder = async (projectIndexStart) => {
     : allProjects;
 
   for (const project of projects) {
-    const { id: project_id, name: project_name } = project;
+    const { id: project_id, name, name_alias_1, name_alias_2 } = project;
+    //Some projects only have alias names
+    const project_name = name || name_alias_1 || name_alias_2;
     const files = await getFilesByProject(project_id);
     for (const file of files) {
       const { project_id, filename, sizes } = file;

@@ -13,10 +13,10 @@ npm i
 
 2. Create .env file with TOKEN_ID and TOKEN_STRING. Look at .env.example file for guide.
 
-3. Run script
+3. Run script in terminal
 
 ```javascript
-npm run start
+npm start
 ```
 
 5. Done.
@@ -32,3 +32,17 @@ Example:
 2. Edit line 38 in index.js to getOAProjectFilesToFolder(**30**).
 
 3. Rerun the script again. The script will start getting data from project index 30 onwards
+
+---
+
+#### Exporting projects details into .csv file
+
+1. Run script in terminal
+
+```javascript
+npm run export-projects-csv
+```
+
+2. Projects details (with project ID and names) will be saved to ./projects.csv
+
+3. Done

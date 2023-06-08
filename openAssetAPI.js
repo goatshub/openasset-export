@@ -65,7 +65,8 @@ const getFile = async (
   //Escape special character not allowed as folder name
   const dir = `./images/${project_id} - ${project_name
     .toString()
-    .replace(/[\\\/\?\*\|\<\>\:]/g, " ")}`;
+    .replace(/[\\\/\?\*\|\<\>\:]/g, " ")
+    .trim()}`;
   //Create file path
   const relative_path_splitted = relative_path.split("/");
   const filename = relative_path_splitted[relative_path_splitted.length - 1];
